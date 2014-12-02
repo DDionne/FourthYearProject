@@ -21,18 +21,21 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
 
 	public enum Command {
-		moveForward, moveBackward, leftTurn, rightTurn, stop;
+		moveForward, moveBackward, leftTurn, rightTurn, stop, setSlowSpeed, setMediumSpeed, setFastSpeed;
 	}
 	
 	Button buttonUp;
 	Button buttonDown;
 	Button buttonLeft;
 	Button buttonRight;
+	SeekBar seekbar1;
 	TextView t1;
 	
 	HttpClient httpClient;
@@ -43,6 +46,7 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		addListenerOnButtons();
+		addSliderListener();
 		httpClient = new DefaultHttpClient();
 		uri = "";
 	}
@@ -66,6 +70,43 @@ public class MainActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	public void addSliderListener() {
+		seekbar1 = (SeekBar) findViewById(R.id.seekBar1);
+		
+		seekbar1.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+
+
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				// TODO Auto-generated method stub
+				switch(progress) {
+				
+					case 0: new MyAsyncTask().execute(Command.setSlowSpeed.toString());
+							Log.d("speed", "Setting speed to Slow");
+							break;
+					case 1: new MyAsyncTask().execute(Command.setMediumSpeed.toString());
+							Log.d("speed", "Setting speed to Medium");
+							break;
+					case 2: new MyAsyncTask().execute(Command.setFastSpeed.toString());
+							Log.d("speed", "Setting speed to Fast");
+							break;
+					default: break;
+				}
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
 	
 	public void addListenerOnButtons() {
 		
