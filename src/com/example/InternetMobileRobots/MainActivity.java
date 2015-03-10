@@ -1,4 +1,4 @@
-package com.example.testapp2;
+package com.example.InternetMobileRobots;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import com.example.InternetMobileRobots.R;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -138,9 +139,10 @@ public class MainActivity extends ActionBarActivity {
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
 				if (event.getAction() == MotionEvent.ACTION_DOWN){
-					Log.d("Down Pressed", "Telling robot to start movign backwards");
+					Log.d("Down Pressed", "Telling robot to start moving backwards");
 					new MyAsyncTask().execute(Command.moveBackward.toString());
 				} else if(event.getAction() == MotionEvent.ACTION_UP){
+					Log.d("Down Released", "Telling robot to stop moving backwards");
 					new MyAsyncTask().execute(Command.stop.toString());
 				}
 				return false;
@@ -156,7 +158,7 @@ public class MainActivity extends ActionBarActivity {
 					Log.d("Left Pressed", "Telling robot to start turning left");
 					new MyAsyncTask().execute(Command.leftTurn.toString());
 				} else if(event.getAction() == MotionEvent.ACTION_UP){
-					Log.d("Right Released", "Telling robot to stop turning left");
+					Log.d("Left Released", "Telling robot to stop turning left");
 					new MyAsyncTask().execute(Command.stop.toString());
 				}
 				return false;
